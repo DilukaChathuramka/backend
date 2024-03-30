@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import globalErrorHandler from "./controller/errorController.js";
+import userRouter from "./router/userRouter.js";
 
 dotenv.config();
 const app = express();
@@ -10,8 +12,25 @@ const app = express();
 app.use(cookieParser());
 app.use(json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.BASE_URL],
+    credentials: true,
+  })
+);
 
+app.use("/user", userRouter);
+
+app.all("*", (req, res, next) => {
+  const err = new CustomError(
+    `Can't find ${req.originalUrl} on the server`,
+    404
+  );
+  next(err);
+});
+
+// globale error handling middleware
+app.use(globalErrorHandler);
 
 mongoose
   .connect(process.env.CONNECT_STR)
