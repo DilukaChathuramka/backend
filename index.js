@@ -6,7 +6,7 @@ import cors from "cors";
 import globalErrorHandler from "./controller/errorController.js";
 import userRouter from "./router/userRouter.js";
 import vehicleRouter from "./router/vehicleRouter.js";
-
+import driverRouter from "./router/driveRoute.js";
 dotenv.config();
 const app = express();
 
@@ -24,6 +24,7 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/user", userRouter);
 app.use("/vehicle", vehicleRouter);
+app.use("/driver", driverRouter);
 app.all("*", (req, res, next) => {
   const err = new CustomError(
     `Can't find ${req.originalUrl} on the server`,
