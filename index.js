@@ -9,6 +9,7 @@ import vehicleRouter from "./router/vehicleRouter.js";
 import driverRouter from "./router/driveRoute.js";
 import packageRouter from "./router/packageRouter.js";
 import paymentRouter from "./router/payementRoute.js";
+import feedbackRouter from "./router/feedback.js";
 dotenv.config();
 const app = express();
 
@@ -29,6 +30,8 @@ app.use("/vehicle", vehicleRouter);
 app.use("/driver", driverRouter);
 app.use("/package", packageRouter);
 app.use("/payment", paymentRouter);
+app.use("/feedback", feedbackRouter);
+
 
 
 app.all("*", (req, res, next) => {
