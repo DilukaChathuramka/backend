@@ -11,6 +11,7 @@ import packageRouter from "./router/packageRouter.js";
 import paymentRouter from "./router/payementRoute.js";
 import feedbackRouter from "./router/feedback.js";
 import customizeRouter from "./router/custompackageRouter.js";
+import empRouter from "./router/Emproute.js";
 dotenv.config();
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/package", packageRouter);
 app.use("/payment", paymentRouter);
 app.use("/feedback", feedbackRouter);
 app.use("/customizepack", customizeRouter);
+app.use("/emp", empRouter);
 
 
 
