@@ -12,12 +12,12 @@ const singToken = (id, name) => {
 };
 
 const registerUser = asyncErrorHandler(async (req, res, next) => {
-  console.log(req.body);
+  
   const { name, email, phoneNo, password } = req.body;
 
   const exits = await user.findOne({ email });
   if (exits) {
-    const error = new CustomError("3", 404);
+    const error = new CustomError("User Name already have", 404);
     return next(error);
   }
 
@@ -37,6 +37,7 @@ const registerUser = asyncErrorHandler(async (req, res, next) => {
         email,
         phoneNo,
         password: hash,
+        role: "user",
       });
       const token = jwt.sign(
         { userId: userCreate._id },
@@ -133,7 +134,7 @@ const getUser = asyncErrorHandler(async (req, res, next) => {
 
 // all details
 const getAllUser = asyncErrorHandler(async (req, res, next) => {
-  const alluser = await user.find({}).select("-password");
+  const alluser = await user.find({ role: { $ne: 'admin' } }).select("-password");
   res.status(200).json(alluser);
 });
 
@@ -154,4 +155,17 @@ const logOutUser = asyncErrorHandler(async (req, res, next) => {
     res.status(200).json({ message: "log out" });
 });
 
-export { registerUser, verifyGmail, loginUser, getAllUser,editUser,logOutUser,getUser};
+
+const updateuserStatus=asyncErrorHandler(async(req,res,next)=>{
+  const userStatus = await user.findByIdAndUpdate(
+    req.params.id,
+    {
+      isActive: false,
+    },
+    { new: true }
+  );
+  res.json({ message: "ok", userStatus });
+});
+
+
+export { registerUser, verifyGmail, loginUser, getAllUser,editUser,logOutUser,getUser,updateuserStatus};
