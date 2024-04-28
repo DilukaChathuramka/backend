@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
 const feedbackSchema = new mongoose.Schema({
-  user: {
+  userfeed: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },
-  vehicle: {
+  vehiclefeed: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "vehicle",
   },
-  driver: {
+  driverfeed: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
