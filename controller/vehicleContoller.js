@@ -38,7 +38,7 @@ const addVehicle = asyncErrorHandler(async (req, res, next) => {
 
 // all vehicle
 const gellAllVehicle = asyncErrorHandler(async (req, res, next) => {
-  const allvehicle = await vehicle.find({});
+  const allvehicle = await vehicle.find({isActive:true});
 
   res.status(200).json(allvehicle);
 });

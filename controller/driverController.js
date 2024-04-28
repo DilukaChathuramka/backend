@@ -74,7 +74,7 @@ const addDriver = asyncErrorHandler(async (req, res, next) => {
 
 
 const getAllDriver=asyncErrorHandler(async(req,res,next)=>{
-  const driver=await user.find({role:"driver"});
+  const driver=await user.find({role:"driver",isActive:true});
   res.status(200).send(driver);
 })
 
