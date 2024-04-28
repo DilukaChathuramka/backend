@@ -38,7 +38,7 @@ const addVehicle = asyncErrorHandler(async (req, res, next) => {
 
 // all vehicle
 const gellAllVehicle = asyncErrorHandler(async (req, res, next) => {
-  const allvehicle = await vehicle.find({});
+  const allvehicle = await vehicle.find({isActive:true});
 
   res.status(200).json(allvehicle);
 });
@@ -81,7 +81,18 @@ const vehilcleUpdate = asyncErrorHandler(async (req, res, next) => {
     },
     { new: true }
   );
-  res.status(200).json(updatedVehicle);
+  res.status(200).json({message:"update success"});
 });
 
-export { addVehicle, gellAllVehicle, oneVehicle,vehilcleUpdate };
+const vehicleDelete=asyncErrorHandler(async(req,res,next)=>{
+  const vehicleStatus = await vehicle.findByIdAndUpdate(
+    req.params.id,
+    {
+      isActive: false,
+    },
+    { new: true }
+  );
+  res.json({ message: "ok", vehicleStatus });
+});
+
+export { addVehicle, gellAllVehicle, oneVehicle,vehilcleUpdate,vehicleDelete };
