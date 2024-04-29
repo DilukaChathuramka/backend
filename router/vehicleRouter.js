@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addVehicle, gellAllVehicle, oneVehicle, vehilcleUpdate } from "../controller/vehicleContoller.js";
+import { addVehicle, gellAllVehicle, oneVehicle, vehicleDelete, vehilcleUpdate } from "../controller/vehicleContoller.js";
 import multer from 'multer'
 const router = Router();
 import path from "path";
@@ -21,6 +21,7 @@ router.route("/addvehicle").post(upload.single('image'), addVehicle);
 router.route("/allvehicle").get(gellAllVehicle);
 router.route("/onevehicle/:id").get(oneVehicle);
 router.route('/vehicleupdate/:id').patch(upload.single('image'), vehilcleUpdate);
+router.route("/deletevehicle/:id").patch(vehicleDelete);
 
 
 
