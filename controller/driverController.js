@@ -3,9 +3,9 @@ import { CustomError } from "../utils/customerError.js";
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 import user from "../model/userModel.js";
+import Leave from "../model/leaves.js";
 
 const addDriver = asyncErrorHandler(async (req, res, next) => {
-  console.log(req.body)
   const { name, email, phoneNo, license,address } = req.body;
 
   const exits = await user.findOne({ email });
@@ -32,7 +32,7 @@ const addDriver = asyncErrorHandler(async (req, res, next) => {
     const randomSeparator = () =>
       separators[Math.floor(Math.random() * separators.length)];
 
-    return `rentalemp${randomSeparator()}${randomNumber()}${randomWord()}`;
+    return `rentaldriv${randomSeparator()}${randomNumber()}${randomWord()}`;
   }
 
   const newPassword = generateMemorablePassword();
@@ -74,7 +74,7 @@ const addDriver = asyncErrorHandler(async (req, res, next) => {
 
 
 const getAllDriver=asyncErrorHandler(async(req,res,next)=>{
-  const driver=await user.find({role:"driver",isActive:true});
+  const driver=await user.find({role:"driver"});
   res.status(200).send(driver);
 })
 
@@ -90,4 +90,37 @@ const updateDriverStatus=asyncErrorHandler(async(req,res,next)=>{
 });
 
 
-export { addDriver,getAllDriver,updateDriverStatus};
+const getDriverById=asyncErrorHandler(async(req,res,next)=>{
+  const driver=await user.findById(req.params.id);
+  res.status(200).send(driver);
+})
+
+const editDriver=asyncErrorHandler(async(req,res,next)=>{
+  const driveredit=await user.findByIdAndUpdate(req.params.id,req.body,{new:true}); 
+  res.status(200).send({message:"Update successfull"});
+})
+
+
+const addLeave=asyncErrorHandler(async(req,res,next)=>{
+ 
+  const addleave= await Leave.create(req.body);
+  res.status(200).send({message:"successfull  request"})
+})
+
+const getLeaves = asyncErrorHandler(async (req, res, next) => {
+  const allLeave = await Leave.find({isActive:true}).populate('user');
+  res.status(200).json(allLeave);
+});
+
+const acceptleave = asyncErrorHandler(async (req, res, next) => {  
+ 
+  const feedback = await Leave.findByIdAndUpdate(req.params.id,{approve:true},{new:true});
+  res.status(200).send({ message: "leave accepted successfully" });
+});
+
+
+const deleteleavs = asyncErrorHandler(async (req, res, next) => { 
+  const feedback = await Leave.findByIdAndUpdate(req.params.id,{isActive:false},{new:true});
+  res.status(200).send({ message: "Feedback Delete" });
+ })
+export { addDriver,getAllDriver,updateDriverStatus,getDriverById,editDriver,addLeave,getLeaves,acceptleave,deleteleavs};

@@ -1,8 +1,19 @@
 import { Router } from "express";
-import { addDriver, getAllDriver, updateDriverStatus } from "../controller/driverController.js";
+import { acceptleave, addDriver, addLeave, deleteleavs, editDriver, getAllDriver, getDriverById, getLeaves, updateDriverStatus } from "../controller/driverController.js";
 const router = Router();
 router.route("/addDriver").post(addDriver);
 router.route("/alldriver").get(getAllDriver);
 router.route("/updateDriver/:id").patch(updateDriverStatus)
+router.route("/getDriver/:id").get(getDriverById)   
+router.route("/editDriver/:id").patch(editDriver);
+
+router.route("/addleave").post(addLeave);
+router.route("/getAllleaves").get(getLeaves);
+router.route("/accetleaves/:id").patch(acceptleave);
+router.route("/deleteleavs/:id").patch(deleteleavs);
+
+
+
+
 
 export default router;
