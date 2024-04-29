@@ -1,9 +1,14 @@
+//emp pw - rentalemp.6t
+
+
 import bcrypt from "bcryptjs";
 
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 import { CustomError } from "../utils/customerError.js";
+import sendEmail from "../utils/sendEmail.js"
 
 import user from "../model/userModel.js";
+import UserLog from "../model/userlog.js";
 
 const addEmployee = asyncErrorHandler(async (req, res, next) => {
   const { name, email, phoneNo,address } = req.body;
@@ -91,5 +96,14 @@ const oneEmployeeDetails=asyncErrorHandler(async(req,res,next)=>{
 });
 
 
+const userLog=asyncErrorHandler(async(req,res,next)=>{
+  const userlogiin=await UserLog.create(req.body);
+  res.status(201).json(userlogiin);
+})
 
-export { addEmployee, allEmp,editEmp,oneEmployeeDetails};
+const allLog=asyncErrorHandler(async(req,res,next)=>{
+  const allLog=await UserLog.find({}).populate("userId").select('-password')
+  res.status(200).send(allLog);
+})
+
+export { addEmployee, allEmp,editEmp,oneEmployeeDetails,userLog,allLog};
