@@ -13,6 +13,8 @@ const addDriver = asyncErrorHandler(async (req, res, next) => {
     const error = new CustomError("user name already have", 404);
     return next(error);
   }
+
+
   function generateRandomString(length) {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -48,7 +50,7 @@ const addDriver = asyncErrorHandler(async (req, res, next) => {
         const error = new CustomError("Hash error", 404);
         return next(error);
       }
-      // Store hash in your password DB.
+     
       const addDriver = await user.create({
         name,
         email,
@@ -89,7 +91,6 @@ const updateDriverStatus=asyncErrorHandler(async(req,res,next)=>{
   res.json({ message: "ok", driverStatus });
 });
 
-
 const getDriverById=asyncErrorHandler(async(req,res,next)=>{
   const driver=await user.findById(req.params.id);
   res.status(200).send(driver);
@@ -99,7 +100,6 @@ const editDriver=asyncErrorHandler(async(req,res,next)=>{
   const driveredit=await user.findByIdAndUpdate(req.params.id,req.body,{new:true}); 
   res.status(200).send({message:"Update successfull"});
 })
-
 
 const addLeave=asyncErrorHandler(async(req,res,next)=>{
  
@@ -111,6 +111,7 @@ const getLeaves = asyncErrorHandler(async (req, res, next) => {
   const allLeave = await Leave.find({isActive:true}).populate('user');
   res.status(200).json(allLeave);
 });
+
 
 const acceptleave = asyncErrorHandler(async (req, res, next) => {  
  

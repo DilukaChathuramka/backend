@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { acceptleave, addDriver, addLeave, deleteleavs, editDriver, getAllDriver, getDriverById, getLeaves, updateDriverStatus } from "../controller/driverController.js";
 const router = Router();
+//crud operations
 router.route("/addDriver").post(addDriver);
 router.route("/alldriver").get(getAllDriver);
 router.route("/updateDriver/:id").patch(updateDriverStatus)
